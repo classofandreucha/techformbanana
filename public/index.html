@@ -291,12 +291,43 @@
       <div class="section-title">About your<br><strong>online store.</strong></div>
       <div class="two-col">
         <div class="field"><label>Preferred platform</label><select id="ec_plataforma"><option value="">Select</option><option>Shopify</option><option>WooCommerce</option><option>TBD</option><option>Other</option></select></div>
-        <div class="field"><label>Products at launch</label><select id="ec_productos"><option value="">Select</option><option>Less than 20</option><option>20 – 100</option><option>More than 100</option></select></div>
+        <div class="field"><label>Launch version</label><select id="ec_mvp"><option value="">Select</option><option>MVP - launch fast then iterate</option><option>Full version from day one</option><option>TBD</option></select></div>
       </div>
+      <div class="field"><label>Must-have for phase 1 <span>(optional)</span></label><div class="hint">What is essential to launch vs what can wait for phase 2</div><textarea id="ec_fase1" placeholder="Phase 1: product pages + checkout. Phase 2: subscriptions..."></textarea></div>
+      <div class="two-col">
+        <div class="field"><label>Products at launch</label><select id="ec_productos"><option value="">Select</option><option>Less than 20</option><option>20 to 100</option><option>More than 100</option></select></div>
+        <div class="field"><label>Custom packs?</label><select id="ec_packs"><option value="">Select</option><option>Fixed packs only</option><option>User builds custom combinations</option><option>Both</option><option>No packs</option></select></div>
+      </div>
+      <div class="field"><label>Product page content</label><div class="hint">Select all that apply</div>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="epc1" value="Recipes and usage tips"><label for="epc1">Recipes / usage tips</label></div>
+          <div class="tag-item"><input type="checkbox" id="epc2" value="Ingredients and benefits"><label for="epc2">Ingredients / benefits</label></div>
+          <div class="tag-item"><input type="checkbox" id="epc3" value="FAQs per product"><label for="epc3">FAQs per product</label></div>
+          <div class="tag-item"><input type="checkbox" id="epc4" value="Editorial content"><label for="epc4">Editorial content</label></div>
+          <div class="tag-item"><input type="checkbox" id="epc5" value="Standard only"><label for="epc5">Standard only</label></div>
+        </div>
+      </div>
+      <div class="field"><label>Additional pages needed</label><div class="hint">Beyond Home, Shop, PDP, About</div>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="ep1" value="FAQ"><label for="ep1">FAQ</label></div>
+          <div class="tag-item"><input type="checkbox" id="ep2" value="Shipping and Returns"><label for="ep2">Shipping &amp; Returns</label></div>
+          <div class="tag-item"><input type="checkbox" id="ep3" value="Press"><label for="ep3">Press</label></div>
+          <div class="tag-item"><input type="checkbox" id="ep4" value="Recipes"><label for="ep4">Recipes</label></div>
+          <div class="tag-item"><input type="checkbox" id="ep5" value="Store Locator"><label for="ep5">Store Locator</label></div>
+          <div class="tag-item"><input type="checkbox" id="ep6" value="Wholesale"><label for="ep6">Wholesale</label></div>
+          <div class="tag-item"><input type="checkbox" id="ep7" value="Contact"><label for="ep7">Contact</label></div>
+        </div>
+      </div>
+      <div class="field-divider"></div>
       <div class="two-col">
         <div class="field"><label>Countries</label><input type="text" id="ec_pais" placeholder="Venezuela, USA..."/></div>
         <div class="field"><label>Currency</label><input type="text" id="ec_moneda" placeholder="USD, VES..."/></div>
       </div>
+      <div class="two-col">
+        <div class="field"><label>Shipping already defined?</label><select id="ec_envio"><option value="">Select</option><option>Yes - carriers, rates and zones ready</option><option>No - needs to be configured</option><option>Partial - some defined</option></select></div>
+        <div class="field"><label>Tax setup</label><select id="ec_impuestos"><option value="">Select</option><option>Our team handles it</option><option>Third party handles it</option><option>Need Banana to set base config</option></select></div>
+      </div>
+      <div class="field"><label>Payment gateway</label><select id="ec_pasarela"><option value="">Select</option><option>Already active</option><option>Need help activating it</option><option>TBD</option></select></div>
       <div class="field"><label>Required features</label>
         <div class="tag-grid">
           <div class="tag-item"><input type="checkbox" id="ef1" value="Cart drawer"><label for="ef1">Cart drawer</label></div>
@@ -308,7 +339,32 @@
           <div class="tag-item"><input type="checkbox" id="ef7" value="Subscriptions"><label for="ef7">Subscriptions</label></div>
           <div class="tag-item"><input type="checkbox" id="ef8" value="B2B/Wholesale"><label for="ef8">B2B / Wholesale</label></div>
           <div class="tag-item"><input type="checkbox" id="ef9" value="Advanced filters"><label for="ef9">Advanced filters</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef10" value="Discount flows"><label for="ef10">Discount flows</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef11" value="Referral program"><label for="ef11">Referral program</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef12" value="Pre-sale"><label for="ef12">Pre-sale</label></div>
         </div>
+      </div>
+      <div class="field-divider"></div>
+      <div class="field"><label>Integrations needed</label>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="ei1" value="Klaviyo"><label for="ei1">Klaviyo</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei2" value="Mailchimp"><label for="ei2">Mailchimp</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei3" value="Meta Pixel"><label for="ei3">Meta Pixel</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei4" value="GA4"><label for="ei4">GA4</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei5" value="Gorgias"><label for="ei5">Gorgias</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei6" value="Zendesk"><label for="ei6">Zendesk</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei7" value="ERP and inventory"><label for="ei7">ERP / inventory</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei8" value="3PL"><label for="ei8">3PL</label></div>
+          <div class="tag-item"><input type="checkbox" id="ei9" value="Accounting system"><label for="ei9">Accounting</label></div>
+        </div>
+      </div>
+      <div class="field"><label>Future marketplaces? <span>(optional)</span></label><div class="hint">Amazon, Faire, external sales channels</div><input type="text" id="ec_marketplaces" placeholder="Amazon, Faire, none for now..."/></div>
+      <div class="field-divider"></div>
+      <div class="field"><label>Who writes the copy?</label><select id="ec_copy"><option value="">Select</option><option>Client team delivers it</option><option>Creative partner handles it</option><option>Banana supports with writing</option><option>TBD</option></select></div>
+      <div class="field"><label>Who loads the initial content?</label><select id="ec_carga"><option value="">Select</option><option>Banana loads everything</option><option>Client team with prior training</option><option>TBD</option></select></div>
+      <div class="two-col">
+        <div class="field"><label>Shopify training needed?</label><select id="ec_training"><option value="">Select</option><option>Yes - products, collections and discounts</option><option>No - team already knows Shopify</option><option>TBD</option></select></div>
+        <div class="field"><label>Post-launch optimization?</label><select id="ec_optimizacion"><option value="">Select</option><option>Yes - conversion and behavior data</option><option>Not needed now</option><option>TBD</option></select></div>
       </div>
       <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
     </div>
@@ -396,7 +452,28 @@
     if (tipoSelected === 'Landing page') { lines.push('LANDING PAGE','Goal: '+(document.getElementById('landing_objetivo').value||'—'),'CTA: '+(document.getElementById('landing_cta').value||'—'),'CRM: '+(document.getElementById('landing_crm').value||'—'),'A/B: '+(document.getElementById('landing_ab').value||'—')); }
     else if (tipoSelected === 'One pager') { lines.push('ONE PAGER','Message: '+(document.getElementById('onepage_mensaje').value||'—'),'Sections: '+getCheckboxGroup(['op1','op2','op3','op4','op5','op6','op7']).join(', '),'Motion: '+(document.getElementById('onepage_motion').value||'—')); }
     else if (tipoSelected === 'Web corporativa') { lines.push('CORPORATE WEB','Pages: '+getCheckboxGroup(['cp1','cp2','cp3','cp4','cp5','cp6','cp7','cp8','cp9']).join(', '),'CMS: '+(document.getElementById('corp_cms').value||'—'),'SEO: '+(document.getElementById('corp_seo').value||'—')); }
-    else if (tipoSelected === 'Ecommerce') { lines.push('ECOMMERCE','Platform: '+(document.getElementById('ec_plataforma').value||'—'),'Products: '+(document.getElementById('ec_productos').value||'—'),'Countries: '+(document.getElementById('ec_pais').value||'—'),'Currency: '+(document.getElementById('ec_moneda').value||'—'),'Features: '+getCheckboxGroup(['ef1','ef2','ef3','ef4','ef5','ef6','ef7','ef8','ef9']).join(', ')); }
+    else if (tipoSelected === 'Ecommerce') {
+      lines.push('ECOMMERCE');
+      lines.push('Platform: '+(document.getElementById('ec_plataforma').value||'—'));
+      lines.push('Launch version: '+(document.getElementById('ec_mvp').value||'—'));
+      lines.push('Phase 1 must-haves: '+(document.getElementById('ec_fase1').value||'—'));
+      lines.push('Products: '+(document.getElementById('ec_productos').value||'—'));
+      lines.push('Custom packs: '+(document.getElementById('ec_packs').value||'—'));
+      lines.push('Product page content: '+getCheckboxGroup(['epc1','epc2','epc3','epc4','epc5']).join(' / '));
+      lines.push('Additional pages: '+getCheckboxGroup(['ep1','ep2','ep3','ep4','ep5','ep6','ep7']).join(' / '));
+      lines.push('Countries: '+(document.getElementById('ec_pais').value||'—'));
+      lines.push('Currency: '+(document.getElementById('ec_moneda').value||'—'));
+      lines.push('Shipping defined: '+(document.getElementById('ec_envio').value||'—'));
+      lines.push('Tax setup: '+(document.getElementById('ec_impuestos').value||'—'));
+      lines.push('Payment gateway: '+(document.getElementById('ec_pasarela').value||'—'));
+      lines.push('Features: '+getCheckboxGroup(['ef1','ef2','ef3','ef4','ef5','ef6','ef7','ef8','ef9','ef10','ef11','ef12']).join(' / '));
+      lines.push('Integrations: '+getCheckboxGroup(['ei1','ei2','ei3','ei4','ei5','ei6','ei7','ei8','ei9']).join(' / '));
+      lines.push('Future marketplaces: '+(document.getElementById('ec_marketplaces').value||'—'));
+      lines.push('Copy by: '+(document.getElementById('ec_copy').value||'—'));
+      lines.push('Content loaded by: '+(document.getElementById('ec_carga').value||'—'));
+      lines.push('Shopify training: '+(document.getElementById('ec_training').value||'—'));
+      lines.push('Post-launch optimization: '+(document.getElementById('ec_optimizacion').value||'—'));
+    }
     else if (tipoSelected === 'Web custom') { lines.push('CUSTOM WEB','Problem: '+(document.getElementById('custom_problema').value||'—'),'Auth: '+(document.getElementById('custom_auth').value||'—'),'Stack: '+(document.getElementById('custom_stack').value||'—'),'Integrations: '+(document.getElementById('custom_integraciones').value||'—')); }
     return lines.join('\n');
   }
