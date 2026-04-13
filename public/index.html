@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Project Intake · Banana Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Switzer:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ECEAE7;
+      --surface: #F0EFEC;
+      --white: #F7F6F3;
+      --black: #111110;
+      --gray: #8A8880;
+      --gray-light: #C4C2BC;
+      --border: #D6D4CF;
+      --font: 'Switzer', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--black); font-family: var(--font); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+
+    /* Header */
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 18px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-left { font-size: 10px; font-weight: 400; color: var(--gray); letter-spacing: .08em; text-transform: uppercase; }
+    .logo { font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--black); text-align: center; }
+    .header-right { font-size: 10px; color: var(--gray); letter-spacing: .06em; text-align: right; text-transform: uppercase; }
+
+    /* Container */
+    .container { max-width: 680px; margin: 0 auto; padding: 72px 32px 120px; }
+
+    /* Hero */
+    .hero { margin-bottom: 64px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 400; color: var(--gray);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 24px;
+    }
+    .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--gray); }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 20px;
+    }
+    .hero h1 strong { font-weight: 600; }
+    .hero p { font-size: 13px; font-weight: 300; color: var(--gray); max-width: 380px; line-height: 1.8; letter-spacing: .01em; }
+
+    /* Progress */
+    .progress-wrap { display: flex; align-items: center; gap: 6px; margin-bottom: 56px; }
+    .progress-step { font-size: 9px; font-weight: 500; color: var(--gray-light); letter-spacing: .1em; text-transform: uppercase; transition: color .25s; white-space: nowrap; }
+    .progress-step.active { color: var(--black); }
+    .progress-line { flex: 1; height: 1px; background: var(--border); min-width: 8px; }
+
+    /* Sections */
+    .form-section { display: none; }
+    .form-section.active { display: block; animation: up .2s ease; }
+    @keyframes up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-tag { font-size: 9px; font-weight: 500; color: var(--gray); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: -.01em;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      color: var(--black);
+    }
+    .section-title strong { font-weight: 600; }
+
+    /* Fields */
+    .field { margin-bottom: 24px; }
+    .field label { display: block; font-size: 9px; font-weight: 500; color: var(--black); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 8px; }
+    .field label span { color: var(--gray); font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 11px; }
+    .field .hint { font-size: 11px; font-weight: 300; color: var(--gray); margin-bottom: 8px; letter-spacing: .01em; }
+
+    input[type="text"], input[type="url"], textarea, select {
+      width: 100%; background: var(--white); border: 1px solid var(--border);
+      border-radius: 2px; color: var(--black); font-family: var(--font);
+      font-size: 13px; font-weight: 300; padding: 11px 14px; outline: none;
+      transition: border-color .15s; appearance: none; -webkit-appearance: none; letter-spacing: .01em;
+    }
+    input::placeholder, textarea::placeholder { color: var(--gray-light); font-weight: 300; }
+    input:focus, textarea:focus, select:focus { border-color: var(--black); }
+    textarea { resize: vertical; min-height: 84px; line-height: 1.7; }
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%238A8880' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px;
+    }
+    select option { background: var(--white); color: var(--black); }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 520px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* Tags */
+    .tag-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag-item { position: relative; }
+    .tag-item input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .tag-item label {
+      display: inline-block; padding: 7px 14px;
+      border: 1px solid var(--border); border-radius: 1px;
+      font-size: 10px; font-weight: 400; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--gray);
+      background: var(--white); cursor: pointer; transition: all .12s; user-select: none;
+    }
+    .tag-item input:checked + label { border-color: var(--black); color: var(--black); background: var(--surface); }
+    .tag-item label:hover { border-color: var(--gray); color: var(--black); }
+
+    /* Type cards */
+    .type-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+    .type-item { position: relative; }
+    .type-item input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .type-item label {
+      display: flex; flex-direction: column; gap: 8px; padding: 20px 18px;
+      border: 1px solid var(--border); border-radius: 2px;
+      background: var(--white); cursor: pointer; transition: all .12s; user-select: none;
+    }
+    .type-name { font-size: 14px; font-weight: 500; color: var(--black); text-transform: uppercase; letter-spacing: .04em; line-height: 1.1; }
+    .type-desc { font-size: 10px; font-weight: 300; color: var(--gray); letter-spacing: .04em; }
+    .type-item input:checked + label { border-color: var(--black); background: var(--surface); }
+    .type-item label:hover { border-color: var(--gray); }
+
+    /* Nav */
+    .nav { display: flex; justify-content: space-between; align-items: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .btn-back { font-family: var(--font); font-size: 10px; font-weight: 400; letter-spacing: .08em; text-transform: uppercase; color: var(--gray); background: none; border: none; cursor: pointer; padding: 10px 0; transition: color .15s; }
+    .btn-back:hover { color: var(--black); }
+    .btn-next { font-family: var(--font); font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--white); background: var(--black); border: 1px solid var(--black); border-radius: 2px; padding: 12px 28px; cursor: pointer; transition: opacity .15s; }
+    .btn-next:hover { opacity: .75; }
+    .btn-next:disabled { opacity: .3; cursor: not-allowed; }
+
+    .field-divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+    .error-msg { display: none; font-size: 11px; font-weight: 300; color: #a03030; padding: 11px 14px; border: 1px solid #e0bfbf; border-radius: 2px; background: #fdf6f6; margin-top: 14px; }
+
+    /* Success */
+    #success { display: none; padding: 80px 0; }
+    .success-mark { font-size: 9px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--gray); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+    .success-mark::before { content: ''; width: 24px; height: 1px; background: var(--gray); }
+    #success h2 { font-size: clamp(36px, 6vw, 60px); font-weight: 300; text-transform: uppercase; letter-spacing: -.02em; line-height: 1.0; margin-bottom: 20px; }
+    #success h2 strong { font-weight: 600; }
+    #success p { font-size: 12px; font-weight: 300; color: var(--gray); max-width: 340px; line-height: 1.9; letter-spacing: .01em; }
+
+    .footer-mark { position: fixed; bottom: 18px; right: 28px; font-size: 9px; font-weight: 400; color: var(--gray-light); letter-spacing: .08em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">Web Project Intake</div>
+  <div class="logo">Banana Creative</div>
+  <div class="header-right">Ccs, Vzla</div>
+</div>
+
+<div class="container">
+  <div id="form-wrap">
+
+    <div class="hero">
+      <div class="hero-tag">Briefing</div>
+      <h1>Tell us about<br>your <strong>project.</strong></h1>
+      <p>This helps us prepare a precise proposal — no back and forth, no guessing.</p>
+    </div>
+
+    <div class="progress-wrap" id="progress-bar"></div>
+
+    <!-- 01 -->
+    <div class="form-section active" data-section="1">
+      <div class="section-tag">01 — Type</div>
+      <div class="section-title">What kind of<br><strong>project is it?</strong></div>
+      <div class="field">
+        <div class="type-grid">
+          <div class="type-item"><input type="radio" name="tipo" id="t1" value="Landing page"><label for="t1"><span class="type-name">Landing</span><span class="type-desc">1 page, conversion</span></label></div>
+          <div class="type-item"><input type="radio" name="tipo" id="t2" value="One pager"><label for="t2"><span class="type-name">One pager</span><span class="type-desc">Scrollytelling</span></label></div>
+          <div class="type-item"><input type="radio" name="tipo" id="t3" value="Web corporativa"><label for="t3"><span class="type-name">Corporate</span><span class="type-desc">Multi-page, brand</span></label></div>
+          <div class="type-item"><input type="radio" name="tipo" id="t4" value="Ecommerce"><label for="t4"><span class="type-name">Ecommerce</span><span class="type-desc">Online store</span></label></div>
+          <div class="type-item"><input type="radio" name="tipo" id="t5" value="Web custom"><label for="t5"><span class="type-name">Custom</span><span class="type-desc">App, portal, product</span></label></div>
+        </div>
+      </div>
+      <div class="nav"><span></span><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 02 -->
+    <div class="form-section" data-section="2">
+      <div class="section-tag">02 — Project</div>
+      <div class="section-title">About the<br><strong>project.</strong></div>
+      <div class="two-col">
+        <div class="field"><label>Client name</label><input type="text" id="cliente" placeholder="Waku, Róstico..."/></div>
+        <div class="field"><label>Industry</label><input type="text" id="industria" placeholder="Food, Tech, Fashion..."/></div>
+      </div>
+      <div class="two-col">
+        <div class="field"><label>Target launch date</label><input type="text" id="fecha_objetivo" placeholder="Aug 2025, Q3..."/></div>
+        <div class="field"><label>Hard deadline?</label><select id="deadline"><option value="">Select</option><option>Yes, tied to event or campaign</option><option>No, flexible</option><option>TBD</option></select></div>
+      </div>
+      <div class="field"><label>New site or redesign?</label><select id="tipo_proyecto"><option value="">Select</option><option>Brand new site</option><option>Redesign of existing site</option><option>Platform migration</option></select></div>
+      <div class="field"><label>Current URL <span>(optional)</span></label><input type="url" id="url_actual" placeholder="https://..."/></div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 03 -->
+    <div class="form-section" data-section="3">
+      <div class="section-tag">03 — Materials</div>
+      <div class="section-title">What do you<br><strong>have today?</strong></div>
+      <div class="field">
+        <label>Existing materials</label>
+        <div class="hint">Select all that apply</div>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="m1" value="Brand guidelines"><label for="m1">Brand guidelines</label></div>
+          <div class="tag-item"><input type="checkbox" id="m2" value="Logo / branding"><label for="m2">Logo / branding</label></div>
+          <div class="tag-item"><input type="checkbox" id="m3" value="Photography"><label for="m3">Photography</label></div>
+          <div class="tag-item"><input type="checkbox" id="m4" value="Video"><label for="m4">Video</label></div>
+          <div class="tag-item"><input type="checkbox" id="m5" value="Copy / text"><label for="m5">Copy / text</label></div>
+          <div class="tag-item"><input type="checkbox" id="m6" value="Wireframes"><label for="m6">Wireframes</label></div>
+          <div class="tag-item"><input type="checkbox" id="m7" value="UI design"><label for="m7">UI design</label></div>
+          <div class="tag-item"><input type="checkbox" id="m8" value="Key visuals"><label for="m8">Key visuals</label></div>
+          <div class="tag-item"><input type="checkbox" id="m9" value="Nothing yet"><label for="m9">Nothing yet</label></div>
+        </div>
+      </div>
+      <div class="field-divider"></div>
+      <div class="field"><label>References <span>(optional)</span></label><div class="hint">Sites you admire — URLs or brand names</div><textarea id="referencias" placeholder="acne.com, ssense.com, arc.net..."></textarea></div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 04-A -->
+    <div class="form-section" data-section="4a">
+      <div class="section-tag">04 — Landing page</div>
+      <div class="section-title">About your<br><strong>landing page.</strong></div>
+      <div class="field"><label>Main conversion goal</label><input type="text" id="landing_objetivo" placeholder="Capture leads, sell product, sign ups..."/></div>
+      <div class="field"><label>Primary CTA</label><input type="text" id="landing_cta" placeholder="Book a demo, Buy now, Subscribe..."/></div>
+      <div class="field"><label>CRM / email integration <span>(optional)</span></label><input type="text" id="landing_crm" placeholder="HubSpot, Klaviyo, Mailchimp..."/></div>
+      <div class="field"><label>A/B testing?</label><select id="landing_ab"><option value="">Select</option><option>Yes</option><option>No</option><option>TBD</option></select></div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 04-B -->
+    <div class="form-section" data-section="4b">
+      <div class="section-tag">04 — One pager</div>
+      <div class="section-title">About your<br><strong>one pager.</strong></div>
+      <div class="field"><label>Core message</label><textarea id="onepage_mensaje" placeholder="What should the visitor remember after leaving?"></textarea></div>
+      <div class="field"><label>Sections to include</label>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="op1" value="Hero"><label for="op1">Hero</label></div>
+          <div class="tag-item"><input type="checkbox" id="op2" value="About"><label for="op2">About</label></div>
+          <div class="tag-item"><input type="checkbox" id="op3" value="Services"><label for="op3">Services</label></div>
+          <div class="tag-item"><input type="checkbox" id="op4" value="Team"><label for="op4">Team</label></div>
+          <div class="tag-item"><input type="checkbox" id="op5" value="Testimonials"><label for="op5">Testimonials</label></div>
+          <div class="tag-item"><input type="checkbox" id="op6" value="FAQ"><label for="op6">FAQ</label></div>
+          <div class="tag-item"><input type="checkbox" id="op7" value="Contact"><label for="op7">Contact</label></div>
+        </div>
+      </div>
+      <div class="field"><label>Scroll animations?</label><select id="onepage_motion"><option value="">Select</option><option>Yes, part of the concept</option><option>Minimal, transitions only</option><option>No</option></select></div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 04-C -->
+    <div class="form-section" data-section="4c">
+      <div class="section-tag">04 — Corporate web</div>
+      <div class="section-title">About your<br><strong>corporate site.</strong></div>
+      <div class="field"><label>Required pages</label>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="cp1" value="Home"><label for="cp1">Home</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp2" value="About"><label for="cp2">About</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp3" value="Services"><label for="cp3">Services</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp4" value="Portfolio"><label for="cp4">Portfolio</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp5" value="Team"><label for="cp5">Team</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp6" value="Blog"><label for="cp6">Blog</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp7" value="Contact"><label for="cp7">Contact</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp8" value="Careers"><label for="cp8">Careers</label></div>
+          <div class="tag-item"><input type="checkbox" id="cp9" value="Press"><label for="cp9">Press</label></div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="field"><label>CMS needed?</label><select id="corp_cms"><option value="">Select</option><option>Yes, team will manage it</option><option>No, Banana handles it</option><option>TBD</option></select></div>
+        <div class="field"><label>Technical SEO?</label><select id="corp_seo"><option value="">Select</option><option>Yes, priority</option><option>Basic is fine</option><option>Not needed now</option></select></div>
+      </div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 04-D -->
+    <div class="form-section" data-section="4d">
+      <div class="section-tag">04 — Ecommerce</div>
+      <div class="section-title">About your<br><strong>online store.</strong></div>
+      <div class="two-col">
+        <div class="field"><label>Preferred platform</label><select id="ec_plataforma"><option value="">Select</option><option>Shopify</option><option>WooCommerce</option><option>TBD</option><option>Other</option></select></div>
+        <div class="field"><label>Products at launch</label><select id="ec_productos"><option value="">Select</option><option>Less than 20</option><option>20 – 100</option><option>More than 100</option></select></div>
+      </div>
+      <div class="two-col">
+        <div class="field"><label>Countries</label><input type="text" id="ec_pais" placeholder="Venezuela, USA..."/></div>
+        <div class="field"><label>Currency</label><input type="text" id="ec_moneda" placeholder="USD, VES..."/></div>
+      </div>
+      <div class="field"><label>Required features</label>
+        <div class="tag-grid">
+          <div class="tag-item"><input type="checkbox" id="ef1" value="Cart drawer"><label for="ef1">Cart drawer</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef2" value="Upsells"><label for="ef2">Upsells</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef3" value="Wishlist"><label for="ef3">Wishlist</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef4" value="Reviews"><label for="ef4">Reviews</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef5" value="Newsletter popup"><label for="ef5">Newsletter popup</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef6" value="Gift cards"><label for="ef6">Gift cards</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef7" value="Subscriptions"><label for="ef7">Subscriptions</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef8" value="B2B/Wholesale"><label for="ef8">B2B / Wholesale</label></div>
+          <div class="tag-item"><input type="checkbox" id="ef9" value="Advanced filters"><label for="ef9">Advanced filters</label></div>
+        </div>
+      </div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 04-E -->
+    <div class="form-section" data-section="4e">
+      <div class="section-tag">04 — Custom web</div>
+      <div class="section-title">About your<br><strong>digital product.</strong></div>
+      <div class="field"><label>What problem does it solve?</label><textarea id="custom_problema" placeholder="Describe the core of the product..."></textarea></div>
+      <div class="two-col">
+        <div class="field"><label>User login required?</label><select id="custom_auth"><option value="">Select</option><option>Yes</option><option>No</option><option>TBD</option></select></div>
+        <div class="field"><label>Tech stack <span>(optional)</span></label><input type="text" id="custom_stack" placeholder="Next.js, no preference..."/></div>
+      </div>
+      <div class="field"><label>External integrations <span>(optional)</span></label><textarea id="custom_integraciones" placeholder="APIs, ERPs, existing databases..."></textarea></div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Continue →</button></div>
+    </div>
+
+    <!-- 05 -->
+    <div class="form-section" data-section="5">
+      <div class="section-tag">05 — Scope</div>
+      <div class="section-title">One last<br><strong>thing.</strong></div>
+      <div class="two-col">
+        <div class="field"><label>Preferred proposal format</label><select id="propuesta"><option value="">Select</option><option>Fixed scope (flat fee)</option><option>By phases (discovery + design + dev)</option><option>No preference, guide us</option></select></div>
+        <div class="field"><label>Budget estimate</label><select id="presupuesto"><option value="">Select</option><option>Under $3,000</option><option>$3,000 – $8,000</option><option>$8,000 – $20,000</option><option>Over $20,000</option><option>TBD</option></select></div>
+      </div>
+      <div class="field"><label>Approval owner</label><input type="text" id="responsable" placeholder="Name and role"/></div>
+      <div class="field"><label>Post-launch support</label><select id="soporte"><option value="">Select</option><option>Hours package</option><option>Ongoing partnership</option><option>Corrective support only</option><option>Not needed</option></select></div>
+      <div class="field-divider"></div>
+      <div class="field"><label>Anything else? <span>(optional)</span></label><textarea id="comentarios" placeholder="Whatever didn't fit above..."></textarea></div>
+      <div class="error-msg" id="error-msg">Something went wrong. Please try again or reach out directly.</div>
+      <div class="nav"><button class="btn-back" onclick="prevSection()">← Back</button><button class="btn-next" id="btn-submit" onclick="submitForm()">Send brief →</button></div>
+    </div>
+
+  </div>
+
+  <div id="success">
+    <div class="success-mark">Received</div>
+    <h2>Brief<br><strong>received.</strong></h2>
+    <p>The Banana team will review your project and be in touch shortly. Thanks for the trust.</p>
+  </div>
+</div>
+
+<div class="footer-mark">360 Vision, Creative Forward.</div>
+
+<script>
+  let currentSection = '1', tipoSelected = null;
+  const typeToSection = {'Landing page':'4a','One pager':'4b','Web corporativa':'4c','Ecommerce':'4d','Web custom':'4e'};
+  const stepLabels = {'1':'01 Type','2':'02 Project','3':'03 Materials','4a':'04 Detail','4b':'04 Detail','4c':'04 Detail','4d':'04 Detail','4e':'04 Detail','5':'05 Scope'};
+
+  function getFlow() { return ['1','2','3', tipoSelected ? typeToSection[tipoSelected] : '4a','5']; }
+  function showSection(id) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.querySelector(`[data-section="${id}"]`).classList.add('active');
+    currentSection = id; updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function updateProgress() {
+    const flow = getFlow(), idx = flow.indexOf(currentSection);
+    const bar = document.getElementById('progress-bar');
+    bar.innerHTML = '';
+    flow.forEach((s, i) => {
+      const span = document.createElement('span');
+      span.className = 'progress-step' + (i <= idx ? ' active' : '');
+      span.textContent = stepLabels[s];
+      bar.appendChild(span);
+      if (i < flow.length - 1) { const l = document.createElement('div'); l.className = 'progress-line'; bar.appendChild(l); }
+    });
+  }
+  function nextSection() {
+    if (currentSection === '1') {
+      const checked = document.querySelector('input[name="tipo"]:checked');
+      if (!checked) { alert('Please select a project type.'); return; }
+      tipoSelected = checked.value;
+    }
+    const flow = getFlow(), idx = flow.indexOf(currentSection);
+    if (idx < flow.length - 1) showSection(flow[idx + 1]);
+  }
+  function prevSection() {
+    const flow = getFlow(), idx = flow.indexOf(currentSection);
+    if (idx > 0) showSection(flow[idx - 1]);
+  }
+  function getCheckboxGroup(ids) { return ids.map(id => document.getElementById(id)).filter(el => el && el.checked).map(el => el.value); }
+  function buildDetalles() {
+    const lines = [];
+    if (tipoSelected === 'Landing page') { lines.push('LANDING PAGE','Goal: '+(document.getElementById('landing_objetivo').value||'—'),'CTA: '+(document.getElementById('landing_cta').value||'—'),'CRM: '+(document.getElementById('landing_crm').value||'—'),'A/B: '+(document.getElementById('landing_ab').value||'—')); }
+    else if (tipoSelected === 'One pager') { lines.push('ONE PAGER','Message: '+(document.getElementById('onepage_mensaje').value||'—'),'Sections: '+getCheckboxGroup(['op1','op2','op3','op4','op5','op6','op7']).join(', '),'Motion: '+(document.getElementById('onepage_motion').value||'—')); }
+    else if (tipoSelected === 'Web corporativa') { lines.push('CORPORATE WEB','Pages: '+getCheckboxGroup(['cp1','cp2','cp3','cp4','cp5','cp6','cp7','cp8','cp9']).join(', '),'CMS: '+(document.getElementById('corp_cms').value||'—'),'SEO: '+(document.getElementById('corp_seo').value||'—')); }
+    else if (tipoSelected === 'Ecommerce') { lines.push('ECOMMERCE','Platform: '+(document.getElementById('ec_plataforma').value||'—'),'Products: '+(document.getElementById('ec_productos').value||'—'),'Countries: '+(document.getElementById('ec_pais').value||'—'),'Currency: '+(document.getElementById('ec_moneda').value||'—'),'Features: '+getCheckboxGroup(['ef1','ef2','ef3','ef4','ef5','ef6','ef7','ef8','ef9']).join(', ')); }
+    else if (tipoSelected === 'Web custom') { lines.push('CUSTOM WEB','Problem: '+(document.getElementById('custom_problema').value||'—'),'Auth: '+(document.getElementById('custom_auth').value||'—'),'Stack: '+(document.getElementById('custom_stack').value||'—'),'Integrations: '+(document.getElementById('custom_integraciones').value||'—')); }
+    return lines.join('\n');
+  }
+  async function submitForm() {
+    const btn = document.getElementById('btn-submit'), errMsg = document.getElementById('error-msg');
+    btn.disabled = true; btn.textContent = 'Sending...'; errMsg.style.display = 'none';
+    const payload = { cliente: document.getElementById('cliente').value, tipo: tipoSelected, industria: document.getElementById('industria').value, fecha_objetivo: document.getElementById('fecha_objetivo').value, deadline: document.getElementById('deadline').value, tipo_proyecto: document.getElementById('tipo_proyecto').value, url_actual: document.getElementById('url_actual').value, materiales: getCheckboxGroup(['m1','m2','m3','m4','m5','m6','m7','m8','m9']), referencias: document.getElementById('referencias').value, detalles: buildDetalles(), propuesta: document.getElementById('propuesta').value, responsable: document.getElementById('responsable').value, soporte: document.getElementById('soporte').value, presupuesto: document.getElementById('presupuesto').value, comentarios: document.getElementById('comentarios').value };
+    try {
+      const res = await fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      if (res.ok) { document.getElementById('form-wrap').style.display = 'none'; document.getElementById('success').style.display = 'block'; }
+      else { throw new Error(); }
+    } catch { errMsg.style.display = 'block'; btn.disabled = false; btn.textContent = 'Send brief →'; }
+  }
+  updateProgress();
+</script>
+</body>
+</html>
