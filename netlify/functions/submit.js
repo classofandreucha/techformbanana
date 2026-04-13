@@ -12,12 +12,15 @@ exports.handler = async function(event) {
 
   const data = JSON.parse(event.body);
 
+  // Notion no acepta comas en campos Select — las reemplazamos
+  const clean = (val) => val ? val.replace(/,/g, ' /') : 'Por definir';
+
   const properties = {
     'Nombre del cliente': {
       title: [{ text: { content: data.cliente || 'Sin nombre' } }]
     },
     'Tipo de proyecto': {
-      select: { name: data.tipo || 'Por definir' }
+      select: { name: clean(data.tipo) }
     },
     'Industria': {
       rich_text: [{ text: { content: data.industria || '' } }]
@@ -26,25 +29,25 @@ exports.handler = async function(event) {
       rich_text: [{ text: { content: data.fecha_objetivo || '' } }]
     },
     'Deadline duro': {
-      select: { name: data.deadline || 'Por definir' }
+      select: { name: clean(data.deadline) }
     },
     'Nuevo / rediseño': {
-      select: { name: data.tipo_proyecto || 'Por definir' }
+      select: { name: clean(data.tipo_proyecto) }
     },
     'Materiales existentes': {
-      multi_select: (data.materiales || []).map(m => ({ name: m }))
+      multi_select: (data.materiales || []).map(m => ({ name: m.replace(/,/g, ' /') }))
     },
     'Referencias': {
       rich_text: [{ text: { content: data.referencias || '' } }]
     },
     'Presupuesto': {
-      select: { name: data.presupuesto || 'Por definir' }
+      select: { name: clean(data.presupuesto) }
     },
     'Propuesta preferida': {
-      select: { name: data.propuesta || 'Por definir' }
+      select: { name: clean(data.propuesta) }
     },
     'Soporte post-lanzamiento': {
-      select: { name: data.soporte || 'Por definir' }
+      select: { name: clean(data.soporte) }
     },
     'Responsable aprobación': {
       rich_text: [{ text: { content: data.responsable || '' } }]
